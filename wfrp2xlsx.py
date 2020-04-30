@@ -120,3 +120,62 @@ class InfoWritter:
             if InfoWritter.__DEBUG:
                 print(f"\n{name}:")
             self.__write2cell(InfoWritter.__ATTR_ADDRESS[name], data, ws)
+
+
+###############################################
+#************* using the class ****************
+if __name__ == "__main__":
+    import sys
+    from openpyxl import load_workbook
+
+    def message(type):
+        if type == 1:
+            print("Something went wrong, maybe you entered the parameters incorrectly. Type in the console: \"wfrp2xlsx -help\" and press ENTER")
+        elif type == 2:
+            print("""The program transfers data from the input file to the output file.
+    The input file comes from the KPP_WFRPed1_PL.exe program (v1.0.0.3) and is named: info.info
+    The output file is a WFRP ed1 character card. Created in a spreadsheet. Must have the * .xlsx extension.
+
+    Example of correct use of the program:
+    ex.1: wfrp2xlsx -help   ---> shows the help content.
+    ex.2: wfrp2xlsx -in info.info -out wfrp.xlsx    ---> correct call.
+    ex.3: wfrp2xlsx -d -in info.info -out wfrp.xlsx    ---> correct call with debug mode.""")
+
+    #possible params: "-help", "-in", "-out"
+    #wfrp2xlsx.py -in info.info -out wfrp.xlsx
+    if len(sys.argv) == 6:
+        flag = False
+        if len(sys.argv[5]) > 5 and sys.argv[5][-5:] == ".xlsx":
+            flag = True
+            if sys.argv[1] == "-d" and sys.argv[2] == "-in" and sys.argv[3] == "info.info" and sys.argv[4] == "-out" and flag == True:
+                #>>>> class work <<<<
+                print("please wait...")
+                workBook = load_workbook(sys.argv[5].strip())
+                writter = InfoWritter(sys.argv[3].strip(), workBook)
+                InfoWritter.change_flag() #<---- enabling debug mode
+                writter.run()
+                workBook.save(sys.argv[5].strip())
+                print("\n**** done ****")
+            else:
+                message(1)
+                sys.exit(1)
+    elif len(sys.argv) == 5:
+        flag = False
+        if len(sys.argv[4]) > 5 and sys.argv[4][-5:] == ".xlsx":
+            flag = True
+            if sys.argv[1] == "-in" and sys.argv[2] == "info.info" and sys.argv[3] == "-out" and flag == True:
+                #>>>> class work <<<<
+                print("please wait...")
+                workBook = load_workbook(sys.argv[4].strip())
+                writter = InfoWritter(sys.argv[2].strip(), workBook)
+                writter.run()
+                workBook.save(sys.argv[4].strip())
+                print("\n**** done ****")
+            else:
+                message(1)
+                sys.exit(1)
+    elif len(sys.argv) == 2:
+        if sys.argv[1] == "-help":
+            message(2)
+    else:
+        message(1)
