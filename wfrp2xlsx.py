@@ -56,6 +56,7 @@ class InfoWritter:
     def __init__(self, infoFileName, workbookObj):
         self.infoFile = infoFileName
         self.wb = workbookObj
+        self.__characterName = None
 
     def __incDestAddrRow(self, dest_addr):
         """Returns the cell with the cell row value increased by 1"""
@@ -106,7 +107,10 @@ class InfoWritter:
                 sheet[dest_addresses[i]] = self.__conv2proper(item)
                 if InfoWritter.__DEBUG:
                     print(f"\t{dest_addresses[i]} --> {item}")
-                i += 1        
+                i += 1
+
+    def getCharName(self):
+        return self.__characterName     
 
     def run(self):
         """Opens the info.info file and rewrites its formatted content to the specific cells in the xlsx file."""
@@ -115,6 +119,7 @@ class InfoWritter:
             if nr == 21: ws = self.wb["BACK"]
             if nr == 36: ws = self.wb["CZARY"]
             name, data = line.split(InfoWritter.__ATTR_SEP)
+            if name == "IMIE": self.__characterName = data
             data = data.split(InfoWritter.__DATA_SEP)
             if InfoWritter.__EMPTY_SEP in data[0]: continue
             if InfoWritter.__DEBUG:
@@ -154,7 +159,8 @@ if __name__ == "__main__":
                 writter = InfoWritter(sys.argv[3].strip(), workBook)
                 InfoWritter.change_flag() #<---- enabling debug mode
                 writter.run()
-                workBook.save(sys.argv[5].strip())
+                xlsxfilename = writter.getCharName().strip().replace(" ", "_") + ".xlsx"
+                workBook.save(xlsxfilename)
                 print("\n**** done ****")
             else:
                 message(1)
@@ -169,7 +175,8 @@ if __name__ == "__main__":
                 workBook = load_workbook(sys.argv[4].strip())
                 writter = InfoWritter(sys.argv[2].strip(), workBook)
                 writter.run()
-                workBook.save(sys.argv[4].strip())
+                xlsxfilename = writter.getCharName().strip().replace(" ", "_") + ".xlsx"
+                workBook.save(xlsxfilename)
                 print("\n**** done ****")
             else:
                 message(1)
