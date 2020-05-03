@@ -152,7 +152,7 @@ if __name__ == "__main__":
         flag = False
         if len(sys.argv[5]) > 5 and sys.argv[5][-5:] == ".xlsx":
             flag = True
-            if sys.argv[1] == "-d" and sys.argv[2] == "-in" and sys.argv[3] == "info.info" and sys.argv[4] == "-out" and flag == True:
+            if sys.argv[1] == "-d" and sys.argv[2] == "-in" and sys.argv[3][-5:] == ".info" and sys.argv[4] == "-out" and flag == True:
                 #>>>> class work <<<<
                 print("please wait...")
                 workBook = load_workbook(sys.argv[5].strip())
@@ -169,7 +169,7 @@ if __name__ == "__main__":
         flag = False
         if len(sys.argv[4]) > 5 and sys.argv[4][-5:] == ".xlsx":
             flag = True
-            if sys.argv[1] == "-in" and sys.argv[2] == "info.info" and sys.argv[3] == "-out" and flag == True:
+            if sys.argv[1] == "-in" and sys.argv[2][-5:] == ".info" and sys.argv[3] == "-out" and flag == True:
                 #>>>> class work <<<<
                 print("please wait...")
                 workBook = load_workbook(sys.argv[4].strip())
