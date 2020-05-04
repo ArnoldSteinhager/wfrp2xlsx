@@ -115,7 +115,7 @@ class InfoWritter:
     def run(self):
         """Opens the info.info file and rewrites its formatted content to the specific cells in the xlsx file."""
         ws = self.wb["FRONT"]
-        for nr, line in enumerate(open(self.infoFile, "r", encoding='utf-8')):
+        for nr, line in enumerate(open(self.infoFile, "r")):
             if nr == 21: ws = self.wb["BACK"]
             if nr == 36: ws = self.wb["CZARY"]
             name, data = line.split(InfoWritter.__ATTR_SEP)
