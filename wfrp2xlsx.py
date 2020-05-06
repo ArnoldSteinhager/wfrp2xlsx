@@ -160,7 +160,7 @@ if __name__ == "__main__":
                     writter = InfoWritter(sys.argv[3].strip(), workBook)
                     InfoWritter.change_flag() #<---- enabling debug mode
                     writter.run()
-                    xlsxfilename = writter.getCharName().strip().replace(" ", "_") + ".xlsx"
+                    xlsxfilename = sys.argv[3][:-5].strip() + ".xlsx"
                     workBook.save(xlsxfilename)
                     print("\n**** done ****")
                 else:
@@ -176,7 +176,7 @@ if __name__ == "__main__":
                     workBook = load_workbook(sys.argv[4].strip())
                     writter = InfoWritter(sys.argv[2].strip(), workBook)
                     writter.run()
-                    xlsxfilename = writter.getCharName().strip().replace(" ", "_") + ".xlsx"
+                    xlsxfilename = sys.argv[2][:-5].strip() + ".xlsx"
                     workBook.save(xlsxfilename)
                     print("\n**** done ****")
                 else:
