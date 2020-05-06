@@ -143,46 +143,50 @@ if __name__ == "__main__":
 
     Example of correct use of the program:
     ex.1: wfrp2xlsx -help   ---> shows the help content.
-    ex.2: wfrp2xlsx -in info.info -out wfrp.xlsx    ---> correct call.
-    ex.3: wfrp2xlsx -d -in info.info -out wfrp.xlsx    ---> correct call with debug mode.""")
-
-    #possible params: "-help", "-in", "-out"
-    #wfrp2xlsx.py -in info.info -out wfrp.xlsx
-    if len(sys.argv) == 6:
-        flag = False
-        if len(sys.argv[5]) > 5 and sys.argv[5][-5:] == ".xlsx":
-            flag = True
-            if sys.argv[1] == "-d" and sys.argv[2] == "-in" and sys.argv[3][-5:] == ".info" and sys.argv[4] == "-out" and flag == True:
-                #>>>> class work <<<<
-                print("please wait...")
-                workBook = load_workbook(sys.argv[5].strip())
-                writter = InfoWritter(sys.argv[3].strip(), workBook)
-                InfoWritter.change_flag() #<---- enabling debug mode
-                writter.run()
-                xlsxfilename = writter.getCharName().strip().replace(" ", "_") + ".xlsx"
-                workBook.save(xlsxfilename)
-                print("\n**** done ****")
-            else:
-                message(1)
-                sys.exit(1)
-    elif len(sys.argv) == 5:
-        flag = False
-        if len(sys.argv[4]) > 5 and sys.argv[4][-5:] == ".xlsx":
-            flag = True
-            if sys.argv[1] == "-in" and sys.argv[2][-5:] == ".info" and sys.argv[3] == "-out" and flag == True:
-                #>>>> class work <<<<
-                print("please wait...")
-                workBook = load_workbook(sys.argv[4].strip())
-                writter = InfoWritter(sys.argv[2].strip(), workBook)
-                writter.run()
-                xlsxfilename = writter.getCharName().strip().replace(" ", "_") + ".xlsx"
-                workBook.save(xlsxfilename)
-                print("\n**** done ****")
-            else:
-                message(1)
-                sys.exit(1)
-    elif len(sys.argv) == 2:
-        if sys.argv[1] == "-help":
-            message(2)
-    else:
-        message(1)
+    ex.2: wfrp2xlsx -in filename.info -out wfrp.xlsx    ---> correct call.
+    ex.3: wfrp2xlsx -d -in filename.info -out wfrp.xlsx    ---> correct call with debug mode.""")
+    
+    def mainf():
+        #possible params: "-help", "-in", "-out"
+        #wfrp2xlsx.py -in filename.info -out wfrp.xlsx
+        if len(sys.argv) == 6:
+            flag = False
+            if len(sys.argv[5]) > 5 and sys.argv[5][-5:] == ".xlsx":
+                flag = True
+                if sys.argv[1] == "-d" and sys.argv[2] == "-in" and sys.argv[3][-5:] == ".info" and sys.argv[4] == "-out" and flag == True:
+                    #>>>> class work <<<<
+                    print("please wait...")
+                    workBook = load_workbook(sys.argv[5].strip())
+                    writter = InfoWritter(sys.argv[3].strip(), workBook)
+                    InfoWritter.change_flag() #<---- enabling debug mode
+                    writter.run()
+                    xlsxfilename = writter.getCharName().strip().replace(" ", "_") + ".xlsx"
+                    workBook.save(xlsxfilename)
+                    print("\n**** done ****")
+                else:
+                    message(1)
+                    sys.exit(1)
+        elif len(sys.argv) == 5:
+            flag = False
+            if len(sys.argv[4]) > 5 and sys.argv[4][-5:] == ".xlsx":
+                flag = True
+                if sys.argv[1] == "-in" and sys.argv[2][-5:] == ".info" and sys.argv[3] == "-out" and flag == True:
+                    #>>>> class work <<<<
+                    print("please wait...")
+                    workBook = load_workbook(sys.argv[4].strip())
+                    writter = InfoWritter(sys.argv[2].strip(), workBook)
+                    writter.run()
+                    xlsxfilename = writter.getCharName().strip().replace(" ", "_") + ".xlsx"
+                    workBook.save(xlsxfilename)
+                    print("\n**** done ****")
+                else:
+                    message(1)
+                    sys.exit(1)
+        elif len(sys.argv) == 2:
+            if sys.argv[1] == "-help":
+                message(2)
+        else:
+            message(1)
+        return 0
+    
+    mainf()
